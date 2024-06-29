@@ -4,7 +4,9 @@ type Props = {
 }
 
 const Layout = ({children}: Props) => {
-  return <div className='h-full w-full bg-red-300'>{children}</div>
+  return (
+    <div className='flex h-screen w-screen items-center justify-center bg-base-100'>{children}</div>
+  )
 }
 
 export default Layout
