@@ -1,3 +1,69 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": ["next/core-web-vitals", "prettier"],
+  "plugins": [
+    "react",
+    "import",
+    "eslint-plugin-import-helpers",
+    "@typescript-eslint",
+    "prettier",
+    "unused-imports"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "rules": {
+    "object-property-newline": "off",
+    "@typescript-eslint/consistent-type-definitions": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/no-floating-promises": "off",
+    "@typescript-eslint/no-misused-promises": "off",
+    "@typescript-eslint/no-tabs": "off",
+    "@typescript-eslint/prefer-nullish-coalescing": "off",
+    "@typescript-eslint/space-before-function-paren": "off",
+    "@typescript-eslint/strict-boolean-expressions": "off",
+    "curly": "off",
+    "import/no-unresolved": "error",
+    "import/prefer-default-export": "off",
+    "indent": "off",
+    "jsx-quotes": ["error", "prefer-single"],
+    "max-len": ["off", {"code": 100, "tabWidth": 2}],
+    "no-console": "off",
+    "no-tabs": "error",
+    "no-unused-vars": [
+      "error", // or "error"
+      {
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_",
+        "caughtErrorsIgnorePattern": "^_"
+      }
+    ],
+    "@typescript-eslint/no-unused-vars": [
+      "error", // or "error"
+      {
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_",
+        "caughtErrorsIgnorePattern": "^_"
+      }
+    ],
+    "react/display-name": "off",
+    "react/jsx-uses-vars": "error",
+    "react/no-unescaped-entities": "off",
+    "react/prop-types": "off",
+    "react/react-in-jsx-scope": "off",
+    "semi": "off",
+    "space-before-function-paren": "off",
+    "unused-imports/no-unused-imports": "error",
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {"selector": "classMethod", "format": ["camelCase"]},
+      {"selector": "interface", "format": ["PascalCase"]},
+      {"selector": "variable", "modifiers": ["destructured"], "format": null}
+    ],
+    "import-helpers/order-imports": [
+      "warn",
+      {
+        "newlinesBetween": "always",
+        "groups": ["module", "/^@/", ["parent", "sibling", "index"]],
+        "alphabetize": {"order": "asc", "ignoreCase": true}
+      }
+    ]
+  }
 }
