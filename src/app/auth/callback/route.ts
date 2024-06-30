@@ -13,7 +13,7 @@ export async function GET(request: Request) {
   const code = searchParams.get('code')
 
   if (!code) {
-    return NextResponse.redirect(`${APP_URL}/login?fail1=true`)
+    return NextResponse.redirect(`${APP_URL}/login?fail=true`)
   }
 
   const {error, data: session} = await supabase.auth.exchangeCodeForSession(code)
