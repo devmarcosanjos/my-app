@@ -3,6 +3,7 @@
 import {NextResponse} from 'next/server'
 
 import {APP_URL} from '@/config/config'
+import {createUser, getUserById} from '@/server/actions/users/users.actions'
 import {createClient} from '@/services/supabase/supabase-server'
 
 export async function GET(request: Request) {
@@ -17,34 +18,22 @@ export async function GET(request: Request) {
 
   const {error, data: session} = await supabase.auth.exchangeCodeForSession(code)
 
-  console.log(session.user?.id)
-
   if (error) {
-    return NextResponse.redirect(`${APP_URL}/login?fail2=true`)
+    return NextResponse.redirect(`${APP_URL}/login?fail=true`)
   }
 
-  const res = await supabase.from('users').select('*').eq('id', session.user.id).maybeSingle()
+  try {
+    const res = await getUserById(session.user.id)
 
-  if (res.error) return NextResponse.redirect(`${APP_URL}/login?fail3=true`)
+    if (!res)
+      await createUser({
+        id: session.user.id,
+        email: session.user.user_metadata?.email,
+        name: session.user.user_metadata?.full_name,
+      })
 
-  if (res.data) return NextResponse.redirect(`${APP_URL}/admin`)
-
-  const resCreate = await supabase
-    .from('users')
-    .insert({
-      id: session.user.id,
-      email: session.user.user_metadata?.email,
-      name: session.user.user_metadata?.full_name,
-    })
-    .select()
-
-  console.log('DATA', resCreate.data)
-  console.log('\n')
-  console.log('ERROR:', resCreate.error)
-
-  if (resCreate.data) {
     return NextResponse.redirect(`${APP_URL}/admin`)
+  } catch (error) {
+    return NextResponse.redirect(`${APP_URL}/login?fail=true`)
   }
-
-  return NextResponse.json(true)
 }
